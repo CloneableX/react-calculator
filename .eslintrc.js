@@ -68,7 +68,7 @@ module.exports = {
 
     // 一部分文件在导入devDependencies的依赖时不报错
     'import/no-extraneous-dependencies': [
-      1,
+      0,
       {
         devDependencies: [
           '**/*.test.{ts,js}',
