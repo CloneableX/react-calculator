@@ -1,15 +1,10 @@
-import user from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
+import { queryByAttribute, render } from '@testing-library/react';
 
 import App from '@/App';
 
 it('should render main page', async () => {
-  render(<App />);
-  const buttonCount = await screen.findByRole('button');
-  expect(buttonCount.innerHTML).toBe('count is 0');
-
-  await user.click(buttonCount);
-  await user.click(buttonCount);
-  expect(buttonCount.innerHTML).toBe('count is 2');
-  expect(screen.queryByText(/The count is now:/)).toBeInTheDocument();
+  const queryById = queryByAttribute.bind(null, 'id');
+  const dom = render(<App />);
+  const keyboard = queryById(dom.container, 'keyboard');
+  expect(keyboard?.children.length).toBe(12);
 });
