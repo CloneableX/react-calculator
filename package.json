@@ -6,9 +6,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "lint:fix": "eslint src build --ext ts,tsx --fix",
+    "lint:fix": "eslint src test build --ext ts,tsx --fix",
     "preview": "vite preview",
-    "test:lint:fix": "eslint test build --ext ts,tsx --fix",
     "test": "jest"
   },
   "engines": {
