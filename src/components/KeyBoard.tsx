@@ -1,15 +1,15 @@
-import { useConsole } from '@/contexts/ConsoleContext';
-import { Key } from '@/components/Key';
+import { AdditionKey, EqualityKey, NumberKey } from '@/components/Key';
 
 export const KeyBoard = () => {
-  const { onChange: handleInputText } = useConsole();
   const keys = [];
   for (let i = 0; i < 10; i++) {
     keys[i] = (
-      <Key value={i} xs={4} onClick={handleInputText}>
+      <NumberKey value={i} xs={4}>
         {i}
-      </Key>
+      </NumberKey>
     );
   }
+  keys.push(<AdditionKey xs={4} />);
+  keys.push(<EqualityKey xs={4} />);
   return <>{...keys}</>;
 };
