@@ -9,14 +9,17 @@ it('should add numbers', async () => {
   const button0 = screen.queryByTestId('key-0')!;
   const button1 = screen.queryByTestId('key-1')!;
   const buttonAdd = screen.queryByTestId('key-addition')!;
+  const buttonSub = screen.queryByTestId('key-subtraction')!;
   const buttonEql = screen.queryByTestId('key-equality')!;
 
   await user.click(button1);
   await user.click(buttonAdd);
   await user.click(button1);
   await user.click(button0);
+  await user.click(buttonSub);
+  await user.click(button1);
   await user.click(buttonEql);
 
   const consoleEle = screen.queryByTestId('console')!;
-  expect(consoleEle.innerHTML).toBe('11');
+  expect(consoleEle.innerHTML).toBe('10');
 });

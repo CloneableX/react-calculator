@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 
 import user from '@testing-library/user-event';
 
-import { AdditionKey, EqualityKey, Key, NumberKey } from '@/components/Key';
+import { AdditionKey, EqualityKey, Key, NumberKey, SubtractionKey } from '@/components/Key';
 import { ConsoleProvider } from '@/contexts/ConsoleContext';
 import { Console } from '@/components/Console';
 
@@ -86,6 +86,36 @@ describe('NumberKey', () => {
   });
 });
 
+describe('SubtractionKey', () => {
+  const clickAdditionKey = async () => {
+    const button = screen.queryByTestId('key-subtraction')!;
+    await user.click(button);
+  };
+
+  it('should display addition char when click addition button', async () => {
+    render(
+      <ConsoleProvider>
+        <Console />
+        <SubtractionKey />
+      </ConsoleProvider>,
+    );
+    await clickAdditionKey();
+
+    expect(getConsoleText()).toBe('0-');
+  });
+
+  it('should replace char when last char is operator and click addition button', async () => {
+    render(
+      <ConsoleProvider initValue="10+">
+        <Console />
+        <SubtractionKey />
+      </ConsoleProvider>,
+    );
+    await clickAdditionKey();
+
+    expect(getConsoleText()).toBe('10-');
+  });
+});
 describe('AdditionKey', () => {
   const clickAdditionKey = async () => {
     const button = screen.queryByTestId('key-addition')!;

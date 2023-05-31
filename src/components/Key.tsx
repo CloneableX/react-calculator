@@ -66,6 +66,25 @@ export const AdditionKey = ({ onClick: clickHandle = () => {}, ...props }: Opera
   );
 };
 
+export const SubtractionKey = ({ onClick: clickHandle = () => {}, ...props }: OperatorKeyProps) => {
+  const { onChange: handleInputText } = useConsole();
+  return (
+    <Key
+      value="subtraction"
+      onClick={(value: number | string) => {
+        handleInputText(
+          (currentText: string) => `${currentText}-`,
+          (currentText: string) => /\D$/.test(currentText),
+        );
+        clickHandle(value);
+      }}
+      {...props}
+    >
+      -
+    </Key>
+  );
+};
+
 export const EqualityKey = ({ onClick: clickHandle = () => {}, ...props }: OperatorKeyProps) => {
   const { onChange: handleInputText } = useConsole();
   return (

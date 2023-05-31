@@ -1,4 +1,4 @@
-import { AdditionKey, EqualityKey, NumberKey } from '@/components/Key';
+import { AdditionKey, EqualityKey, NumberKey, SubtractionKey } from '@/components/Key';
 
 export const KeyBoard = () => {
   const keys = [];
@@ -10,6 +10,7 @@ export const KeyBoard = () => {
     );
   }
   keys.push(<AdditionKey xs={4} />);
+  keys.push(<SubtractionKey xs={4} />);
   keys.push(<EqualityKey xs={4} />);
   return <>{...keys}</>;
 };
