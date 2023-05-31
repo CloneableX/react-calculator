@@ -4,26 +4,32 @@ const ConsoleContext = createContext<Array<any>>([]);
 
 export const ConsoleProvider = ({ initValue = '0', children }: Record<string, any>) => {
   const [text, setText] = useState(initValue);
-  const contextValue = useMemo(() => [text, setText], [text, setText]);
+  const [calculatedFlag, setCalculatedFlag] = useState(false);
+  const contextValue = useMemo(
+    () => [text, setText, calculatedFlag, setCalculatedFlag],
+    [text, setText, calculatedFlag, setCalculatedFlag],
+  );
   return <ConsoleContext.Provider value={contextValue}>{children}</ConsoleContext.Provider>;
 };
 
 export const useConsole = () => {
-  const [text, setText] = useContext(ConsoleContext);
+  const [text, setText, calculatedFlag, setCalculatedFlag] = useContext(ConsoleContext);
 
   const handleInputText = useCallback(
     (
-      operateCallback: (currentText: string) => string,
+      operateCallback: (currentText: string, isCalculated: boolean) => string,
       isNeedFormat: (currentText: string) => boolean,
+      isCalculated = false,
     ) => {
       let formattedText = text;
       if (isNeedFormat(formattedText)) {
         formattedText = formattedText.slice(0, formattedText.length - 1);
       }
-      const newText = operateCallback(formattedText);
+      const newText = operateCallback(formattedText, calculatedFlag);
       setText(newText);
+      setCalculatedFlag(isCalculated);
     },
-    [text],
+    [text, calculatedFlag],
   );
 
   return { value: text, onChange: handleInputText };

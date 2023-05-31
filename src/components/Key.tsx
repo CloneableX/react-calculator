@@ -33,7 +33,7 @@ export const NumberKey = ({ onClick: clickHandle = () => {}, ...props }: NumberK
     <Key
       onClick={(value: number | string) => {
         handleInputText(
-          (currentText: string) => `${currentText}${value}`,
+          (currentText, isCalculated) => (isCalculated ? `${value}` : `${currentText}${value}`),
           (currentText: string) => currentText === '0' || /\D0$/.test(currentText),
         );
         clickHandle(value);
@@ -44,63 +44,94 @@ export const NumberKey = ({ onClick: clickHandle = () => {}, ...props }: NumberK
 };
 
 type OperatorKeyProps = {
+  value: string;
   onClick?: (value: number | string) => void;
+  operateCallback: (currentText: string) => string;
+  isCalculated?: boolean;
 } & Record<string, any>;
 
-export const AdditionKey = ({ onClick: clickHandle = () => {}, ...props }: OperatorKeyProps) => {
+export const OperatorKey = ({
+  onClick: clickHandle = () => {},
+  operateCallback,
+  isCalculated = false,
+  ...props
+}: OperatorKeyProps) => {
   const { onChange: handleInputText } = useConsole();
   return (
     <Key
-      value="addition"
       onClick={(value: number | string) => {
         handleInputText(
-          (currentText: string) => `${currentText}+`,
+          operateCallback,
           (currentText: string) => /\D$/.test(currentText),
+          isCalculated,
         );
         clickHandle(value);
       }}
+      {...props}
+    />
+  );
+};
+
+export const AdditionKey = (props: Record<string, any>) => {
+  return (
+    <OperatorKey
+      value="addition"
+      operateCallback={(currentText: string) => `${currentText}+`}
       {...props}
     >
       +
-    </Key>
+    </OperatorKey>
   );
 };
 
-export const SubtractionKey = ({ onClick: clickHandle = () => {}, ...props }: OperatorKeyProps) => {
-  const { onChange: handleInputText } = useConsole();
+export const SubtractionKey = (props: Record<string, any>) => {
   return (
-    <Key
+    <OperatorKey
       value="subtraction"
-      onClick={(value: number | string) => {
-        handleInputText(
-          (currentText: string) => `${currentText}-`,
-          (currentText: string) => /\D$/.test(currentText),
-        );
-        clickHandle(value);
-      }}
+      operateCallback={(currentText: string) => `${currentText}-`}
       {...props}
     >
       -
-    </Key>
+    </OperatorKey>
   );
 };
 
-export const EqualityKey = ({ onClick: clickHandle = () => {}, ...props }: OperatorKeyProps) => {
-  const { onChange: handleInputText } = useConsole();
+export const MultiplicationKey = (props: Record<string, any>) => {
   return (
-    <Key
+    <OperatorKey
+      value="multiplication"
+      operateCallback={(currentText: string) => `${currentText}*`}
+      {...props}
+    >
+      -
+    </OperatorKey>
+  );
+};
+
+export const DivisionKey = (props: Record<string, any>) => {
+  return (
+    <OperatorKey
+      value="division"
+      operateCallback={(currentText: string) => `${currentText}/`}
+      {...props}
+    >
+      /
+    </OperatorKey>
+  );
+};
+
+export const EqualityKey = (props: Record<string, any>) => {
+  return (
+    <OperatorKey
       value="equality"
-      onClick={(value: number | string) => {
-        handleInputText(
-          // eslint-disable-next-line no-eval
-          (currentText: string) => eval(currentText),
-          (currentText: string) => /\D$/.test(currentText),
-        );
-        clickHandle(value);
+      operateCallback={(currentText: string) => {
+        // eslint-disable-next-line no-eval
+        return eval(currentText);
       }}
+      isCalculated
       {...props}
     >
       =
-    </Key>
+    </OperatorKey>
   );
 };

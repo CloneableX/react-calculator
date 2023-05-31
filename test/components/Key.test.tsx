@@ -2,7 +2,15 @@ import { render, screen } from '@testing-library/react';
 
 import user from '@testing-library/user-event';
 
-import { AdditionKey, EqualityKey, Key, NumberKey, SubtractionKey } from '@/components/Key';
+import {
+  AdditionKey,
+  DivisionKey,
+  EqualityKey,
+  Key,
+  MultiplicationKey,
+  NumberKey,
+  SubtractionKey,
+} from '@/components/Key';
 import { ConsoleProvider } from '@/contexts/ConsoleContext';
 import { Console } from '@/components/Console';
 
@@ -86,65 +94,52 @@ describe('NumberKey', () => {
   });
 });
 
-describe('SubtractionKey', () => {
-  const clickAdditionKey = async () => {
-    const button = screen.queryByTestId('key-subtraction')!;
-    await user.click(button);
-  };
-
-  it('should display addition char when click addition button', async () => {
-    render(
-      <ConsoleProvider>
-        <Console />
-        <SubtractionKey />
-      </ConsoleProvider>,
-    );
-    await clickAdditionKey();
-
-    expect(getConsoleText()).toBe('0-');
-  });
-
-  it('should replace char when last char is operator and click addition button', async () => {
+describe('OperatorKey', () => {
+  it('should replace char when last char is operator and click operator button', async () => {
     render(
       <ConsoleProvider initValue="10+">
         <Console />
         <SubtractionKey />
       </ConsoleProvider>,
     );
-    await clickAdditionKey();
+    const button = screen.queryByTestId('key-subtraction')!;
+    await user.click(button);
 
     expect(getConsoleText()).toBe('10-');
   });
-});
-describe('AdditionKey', () => {
-  const clickAdditionKey = async () => {
-    const button = screen.queryByTestId('key-addition')!;
-    await user.click(button);
-  };
 
-  it('should display addition char when click addition button', async () => {
-    render(
-      <ConsoleProvider>
-        <Console />
-        <AdditionKey />
-      </ConsoleProvider>,
-    );
-    await clickAdditionKey();
+  it.each([
+    { keyValue: 'subtraction', component: <SubtractionKey />, expected: '0-' },
+    {
+      keyValue: 'addition',
+      component: <AdditionKey />,
+      expected: '0+',
+    },
+    {
+      keyValue: 'multiplication',
+      component: <MultiplicationKey />,
+      expected: '0*',
+    },
+    {
+      keyValue: 'division',
+      component: <DivisionKey />,
+      expected: '0/',
+    },
+  ])(
+    'should display $keyValue char when click $keyValue key',
+    async ({ keyValue, component, expected }) => {
+      render(
+        <ConsoleProvider>
+          <Console />
+          {component}
+        </ConsoleProvider>,
+      );
+      const button = screen.queryByTestId(`key-${keyValue}`)!;
+      await user.click(button);
 
-    expect(getConsoleText()).toBe('0+');
-  });
-
-  it('should replace char when last char is operator and click addition button', async () => {
-    render(
-      <ConsoleProvider initValue="10+">
-        <Console />
-        <AdditionKey />
-      </ConsoleProvider>,
-    );
-    await clickAdditionKey();
-
-    expect(getConsoleText()).toBe('10+');
-  });
+      expect(getConsoleText()).toBe(expected);
+    },
+  );
 });
 
 describe('EqualityKey', () => {
@@ -175,5 +170,39 @@ describe('EqualityKey', () => {
     await clickEqualityKey();
 
     expect(getConsoleText()).toBe('10');
+  });
+
+  it('should replace by new number if click number key after click equality button', async () => {
+    render(
+      <ConsoleProvider initValue="1+9">
+        <Console />
+        <NumberKey value={1} />
+        <EqualityKey />
+      </ConsoleProvider>,
+    );
+
+    const button1 = screen.queryByTestId('key-1')!;
+
+    await clickEqualityKey();
+    await user.click(button1);
+
+    expect(getConsoleText()).toBe('1');
+  });
+
+  it('should calculate by last result if click operator key after click equality button', async () => {
+    render(
+      <ConsoleProvider initValue="1+9">
+        <Console />
+        <AdditionKey />
+        <EqualityKey />
+      </ConsoleProvider>,
+    );
+
+    const buttonAdd = screen.queryByTestId('key-addition')!;
+
+    await clickEqualityKey();
+    await user.click(buttonAdd);
+
+    expect(getConsoleText()).toBe('10+');
   });
 });
