@@ -1,6 +1,7 @@
 import {
   AdditionKey,
   DivisionKey,
+  DotKey,
   EqualityKey,
   MultiplicationKey,
   NumberKey,
@@ -20,6 +21,7 @@ export const KeyBoard = () => {
   keys.push(<SubtractionKey xs={4} />);
   keys.push(<MultiplicationKey xs={4} />);
   keys.push(<DivisionKey xs={4} />);
+  keys.push(<DotKey xs={4} />);
   keys.push(<EqualityKey xs={4} />);
   return <>{...keys}</>;
 };

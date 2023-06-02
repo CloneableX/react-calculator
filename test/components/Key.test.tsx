@@ -5,6 +5,7 @@ import user from '@testing-library/user-event';
 import {
   AdditionKey,
   DivisionKey,
+  DotKey,
   EqualityKey,
   Key,
   MultiplicationKey,
@@ -124,6 +125,11 @@ describe('OperatorKey', () => {
       keyValue: 'division',
       component: <DivisionKey />,
       expected: '0/',
+    },
+    {
+      keyValue: 'dot',
+      component: <DotKey />,
+      expected: '0.',
     },
   ])(
     'should display $keyValue char when click $keyValue key',

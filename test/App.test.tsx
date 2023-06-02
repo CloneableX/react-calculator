@@ -13,6 +13,7 @@ it('should add numbers', async () => {
   const buttonSub = screen.queryByTestId('key-subtraction')!;
   const buttonMul = screen.queryByTestId('key-multiplication')!;
   const buttonDiv = screen.queryByTestId('key-division')!;
+  const buttonDot = screen.queryByTestId('key-dot')!;
   const buttonEql = screen.queryByTestId('key-equality')!;
 
   await user.click(button1);
@@ -27,8 +28,12 @@ it('should add numbers', async () => {
   await user.click(button2);
   await user.click(buttonDiv);
   await user.click(button1);
+  await user.click(buttonAdd);
+  await user.click(button1);
+  await user.click(buttonDot);
+  await user.click(button1);
   await user.click(buttonEql);
 
   const consoleEle = screen.queryByTestId('console')!;
-  expect(consoleEle.innerHTML).toBe('11');
+  expect(consoleEle.innerHTML).toBe('12.1');
 });

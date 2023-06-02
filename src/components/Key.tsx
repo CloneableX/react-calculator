@@ -103,7 +103,7 @@ export const MultiplicationKey = (props: Record<string, any>) => {
       operateCallback={(currentText: string) => `${currentText}*`}
       {...props}
     >
-      -
+      *
     </OperatorKey>
   );
 };
@@ -116,6 +116,18 @@ export const DivisionKey = (props: Record<string, any>) => {
       {...props}
     >
       /
+    </OperatorKey>
+  );
+};
+
+export const DotKey = (props: Record<string, any>) => {
+  return (
+    <OperatorKey
+      value="dot"
+      operateCallback={(currentText: string) => `${currentText}.`}
+      {...props}
+    >
+      .
     </OperatorKey>
   );
 };
