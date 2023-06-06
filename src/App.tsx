@@ -8,19 +8,25 @@ import { Container, Grid, Paper } from '@mui/material';
 import { ConsoleProvider } from '@/contexts/ConsoleContext';
 import { Console } from '@/components/Console';
 import { KeyBoard } from '@/components/KeyBoard';
+import { History } from '@/components/History';
 
 import './App.css';
 
 const App = () => {
   return (
     <Container maxWidth="xs">
-      <Paper sx={{ p: 2 }}>
+      <Paper sx={{ p: 2, width: 500 }}>
         <Grid id="calculator" container rowSpacing={2}>
           <ConsoleProvider>
-            <Grid item xs={12}>
-              <Console />
+            <Grid item xs={6} container>
+              <Grid item xs={12}>
+                <Console />
+              </Grid>
+              <KeyBoard />
             </Grid>
-            <KeyBoard />
+            <Grid item xs={6}>
+              <History />
+            </Grid>
           </ConsoleProvider>
         </Grid>
       </Paper>
