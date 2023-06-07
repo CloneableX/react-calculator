@@ -11,11 +11,12 @@ export const Key = ({ value, children, onClick: clickHandle, ...props }: KeyProp
   return (
     <Grid
       item
+      data-testid={`key-${value}`}
       key={value}
       onClick={() => clickHandle(value)}
       component={Button}
+      sx={{ border: 1, borderColor: 'primary.light' }}
       {...props}
-      data-testid={`key-${value}`}
     >
       {children}
     </Grid>

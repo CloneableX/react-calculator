@@ -41,7 +41,7 @@ export const useConsole = () => {
       const newText = operateCallback(formattedText, calculatedFlag);
       if (isCalculated) {
         const time = new Date().getTime();
-        setHistories([...histories, { id: time, expression: text }]);
+        setHistories([...histories, { id: time, expression: formattedText }]);
       }
       setText(newText);
       setCalculatedFlag(isCalculated);

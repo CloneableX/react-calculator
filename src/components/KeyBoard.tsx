@@ -11,21 +11,46 @@ import {
 } from '@/components/Key';
 
 export const KeyBoard = () => {
-  const keys = [];
-  for (let i = 0; i < 10; i++) {
-    keys[i] = (
-      <NumberKey value={i} xs={4}>
-        {i}
+  return (
+    <>
+      <ClearKey xs={3} />
+      <BackspaceKey xs={3} />
+      <AdditionKey xs={3} />
+      <SubtractionKey xs={3} />
+      <NumberKey value={1} xs={3}>
+        1
       </NumberKey>
-    );
-  }
-  keys.push(<AdditionKey xs={4} />);
-  keys.push(<SubtractionKey xs={4} />);
-  keys.push(<MultiplicationKey xs={4} />);
-  keys.push(<DivisionKey xs={4} />);
-  keys.push(<DotKey xs={4} />);
-  keys.push(<EqualityKey xs={4} />);
-  keys.push(<ClearKey xs={4} />);
-  keys.push(<BackspaceKey xs={4} />);
-  return <>{...keys}</>;
+      <NumberKey value={2} xs={3}>
+        2
+      </NumberKey>
+      <NumberKey value={3} xs={3}>
+        3
+      </NumberKey>
+      <MultiplicationKey xs={3} />
+      <NumberKey value={4} xs={3}>
+        4
+      </NumberKey>
+      <NumberKey value={5} xs={3}>
+        5
+      </NumberKey>
+      <NumberKey value={6} xs={3}>
+        6
+      </NumberKey>
+      <DivisionKey xs={3} />
+      <NumberKey value={7} xs={3}>
+        7
+      </NumberKey>
+      <NumberKey value={8} xs={3}>
+        8
+      </NumberKey>
+      <NumberKey value={9} xs={3}>
+        9
+      </NumberKey>
+      <DotKey xs={3} />
+      <NumberKey value={0} xs={3}>
+        0
+      </NumberKey>
+      <EqualityKey xs={9} />
+    </>
+  );
 };

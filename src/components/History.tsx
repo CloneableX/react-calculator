@@ -9,7 +9,7 @@ export const History = () => {
       <Button variant="contained" data-testid="clear-history" onClick={clearHistory}>
         Clear History
       </Button>
-      <List data-testid="history" sx={{ overflowY: 'auto', maxHeight: 200 }}>
+      <List data-testid="history" sx={{ overflowY: 'auto', maxHeight: 200, width: '100%' }}>
         {histories.length > 0 ? (
           histories.map(({ id, expression }: HistoryType) => (
             <ListItem key={`histories-${id}`} data-testid={`history-${id}`} divider disablePadding>

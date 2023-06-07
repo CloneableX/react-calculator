@@ -16,15 +16,23 @@ const App = () => {
   return (
     <Container maxWidth="xs">
       <Paper sx={{ p: 2, width: 500 }}>
-        <Grid id="calculator" container rowSpacing={2}>
+        <Grid id="calculator" container columnSpacing={2}>
           <ConsoleProvider>
-            <Grid item xs={6} container>
-              <Grid item xs={12}>
+            <Grid item xs={8} container>
+              <Grid item xs={12} sx={{ border: 1, borderRadius: 1, borderColor: 'primary.main' }}>
                 <Console />
               </Grid>
               <KeyBoard />
             </Grid>
-            <Grid item xs={6}>
+            <Grid
+              item
+              container
+              xs={4}
+              display="flex"
+              direction="column"
+              justifyContent="flex-start"
+              alignItems="flex-start"
+            >
               <History />
             </Grid>
           </ConsoleProvider>
