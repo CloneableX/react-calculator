@@ -4,6 +4,8 @@ import user from '@testing-library/user-event';
 
 import {
   AdditionKey,
+  BackspaceKey,
+  ClearKey,
   DivisionKey,
   DotKey,
   EqualityKey,
@@ -12,7 +14,7 @@ import {
   NumberKey,
   SubtractionKey,
 } from '@/components/Key';
-import { ConsoleProvider } from '@/contexts/ConsoleContext';
+import { CONSOLE_INIT_TEXT, ConsoleProvider } from '@/contexts/ConsoleContext';
 import { Console } from '@/components/Console';
 
 describe('Key', () => {
@@ -131,11 +133,17 @@ describe('OperatorKey', () => {
       component: <DotKey />,
       expected: '0.',
     },
+    {
+      keyValue: 'clear',
+      initValue: '10+2',
+      component: <ClearKey />,
+      expected: CONSOLE_INIT_TEXT,
+    },
   ])(
     'should display $keyValue char when click $keyValue key',
-    async ({ keyValue, component, expected }) => {
+    async ({ keyValue, initValue, component, expected }) => {
       render(
-        <ConsoleProvider>
+        <ConsoleProvider initValue={initValue}>
           <Console />
           {component}
         </ConsoleProvider>,
@@ -210,5 +218,36 @@ describe('EqualityKey', () => {
     await user.click(buttonAdd);
 
     expect(getConsoleText()).toBe('10+');
+  });
+});
+
+describe('BackspaceKey', () => {
+  async function clickBackspace() {
+    const keyBack = screen.queryByTestId('key-backspace')!;
+    await user.click(keyBack);
+  }
+
+  it('should remove last char in console', async () => {
+    render(
+      <ConsoleProvider initValue="1+9">
+        <Console />
+        <BackspaceKey />
+      </ConsoleProvider>,
+    );
+    await clickBackspace();
+
+    expect(getConsoleText()).toBe('1+');
+  });
+
+  it('should reset to initial value if expression in console is one char', async () => {
+    render(
+      <ConsoleProvider initValue="1">
+        <Console />
+        <BackspaceKey />
+      </ConsoleProvider>,
+    );
+    await clickBackspace();
+
+    expect(getConsoleText()).toBe(CONSOLE_INIT_TEXT);
   });
 });

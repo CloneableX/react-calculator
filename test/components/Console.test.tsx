@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import { ConsoleProvider } from '@/contexts/ConsoleContext';
+import { CONSOLE_INIT_TEXT, ConsoleProvider } from '@/contexts/ConsoleContext';
 import { Console } from '@/components/Console';
 
 describe('Console', () => {
@@ -12,6 +12,6 @@ describe('Console', () => {
     );
 
     const consoleEle = screen.queryByTestId('console')!;
-    expect(consoleEle.innerHTML).toBe('0');
+    expect(consoleEle.innerHTML).toBe(CONSOLE_INIT_TEXT);
   });
 });

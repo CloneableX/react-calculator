@@ -3,6 +3,7 @@ import { queryByText, render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 
 import App from '@/App';
+import { CONSOLE_INIT_TEXT } from '@/contexts/ConsoleContext';
 
 it('should calculate numbers', async () => {
   render(<App />);
@@ -36,6 +37,15 @@ it('should calculate numbers', async () => {
 
   const consoleEle = screen.queryByTestId('console')!;
   expect(consoleEle.innerHTML).toBe('12.1');
+
+  const buttonBack = screen.queryByTestId('key-backspace')!;
+  const buttonClear = screen.queryByTestId('key-clear')!;
+
+  await user.click(buttonBack);
+  expect(consoleEle.innerHTML).toBe('12.');
+
+  await user.click(buttonClear);
+  expect(consoleEle.innerHTML).toBe(CONSOLE_INIT_TEXT);
 });
 
 it('should operate calculation histories', async () => {

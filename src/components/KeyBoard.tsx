@@ -1,5 +1,7 @@
 import {
   AdditionKey,
+  BackspaceKey,
+  ClearKey,
   DivisionKey,
   DotKey,
   EqualityKey,
@@ -23,5 +25,7 @@ export const KeyBoard = () => {
   keys.push(<DivisionKey xs={4} />);
   keys.push(<DotKey xs={4} />);
   keys.push(<EqualityKey xs={4} />);
+  keys.push(<ClearKey xs={4} />);
+  keys.push(<BackspaceKey xs={4} />);
   return <>{...keys}</>;
 };

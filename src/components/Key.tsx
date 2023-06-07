@@ -1,6 +1,6 @@
 import { Button, Grid } from '@mui/material';
 
-import { useConsole } from '@/contexts/ConsoleContext';
+import { CONSOLE_INIT_TEXT, useConsole } from '@/contexts/ConsoleContext';
 
 type KeyProps = {
   value: number | string;
@@ -34,7 +34,7 @@ export const NumberKey = ({ onClick: clickHandle = () => {}, ...props }: NumberK
       onClick={(value: number | string) => {
         handleInputText(
           (currentText, isCalculated) => (isCalculated ? `${value}` : `${currentText}${value}`),
-          (currentText: string) => currentText === '0' || /\D0$/.test(currentText),
+          (currentText: string) => currentText === CONSOLE_INIT_TEXT || /\D0$/.test(currentText),
         );
         clickHandle(value);
       }}
@@ -138,7 +138,7 @@ export const EqualityKey = (props: Record<string, any>) => {
       value="equality"
       operateCallback={(currentText: string) => {
         // eslint-disable-next-line no-eval
-        return eval(currentText);
+        return eval(currentText).toString();
       }}
       isCalculated
       {...props}
@@ -147,3 +147,22 @@ export const EqualityKey = (props: Record<string, any>) => {
     </OperatorKey>
   );
 };
+
+export const ClearKey = (props: Record<string, any>) => (
+  <OperatorKey value="clear" operateCallback={() => CONSOLE_INIT_TEXT} {...props}>
+    C
+  </OperatorKey>
+);
+
+export const BackspaceKey = (props: Record<string, any>) => (
+  <OperatorKey
+    value="backspace"
+    operateCallback={(currentText) => {
+      if (currentText.length === 1) return CONSOLE_INIT_TEXT;
+      return currentText.slice(0, currentText.length - 1);
+    }}
+    {...props}
+  >
+    &lt;-
+  </OperatorKey>
+);

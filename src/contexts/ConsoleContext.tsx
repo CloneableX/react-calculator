@@ -5,10 +5,12 @@ export type History = {
   expression: string;
 };
 
+export const CONSOLE_INIT_TEXT = '0' as const;
+
 const ConsoleContext = createContext<Array<any>>([]);
 
 export const ConsoleProvider = ({
-  initValue = '0',
+  initValue = CONSOLE_INIT_TEXT,
   initHistories = new Array<History>(),
   children,
 }: Record<string, any>) => {
